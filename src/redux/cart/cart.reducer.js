@@ -1,8 +1,12 @@
 //importing our action 
 import CartActionTypes from './cart.types';
+//importing util function 
+import { addItemToCart } from './cart.utils';
 
+//new prop cartItems to an empty array
 const INITIAL_STATE = {
-    hidden: true
+    hidden: true,
+    cartItems: []
 };
 // We want our shopping cart to be hidden in the beginning. (initial state)
 
@@ -19,6 +23,14 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 hidden: !state.hidden
+            };
+        //new ADD_ITEM action conditional (if triggered)
+        case CartActionTypes.ADD_ITEM:
+            return {
+                //this ...state just means all of the state as is
+                ...state,
+                //add existing state to cartItems and on top depositing the action payload into the array 
+                cartItems: addItemToCart(state.cartItems, action.payload)
             }
         default:
             //else
