@@ -4,16 +4,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toggleCartHidden } from '../../redux/cart/cart.action';
 
+//122
+import { selectCartItemsCount } from '../../redux/cart/cart.selectors';
+
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 
 import './cart-icon.styles.scss';
 
 //we can access toggleCartHidden
-const CartIcon = ({ toggleCartHidden }) => (
+const CartIcon = ({ toggleCartHidden, itemCount }) => (
     //and because we have access in our CartIcon component we can bind it onClick
     <div className='cart-icon' onClick={toggleCartHidden}>
         <ShoppingIcon className='shopping-icon' />
-        <span className='item-count'>0</span>
+        <span className='item-count'>{itemCount}</span>
     </div>
 );
 
@@ -23,8 +26,13 @@ const mapDispatchToProps = dispatch => ({
     toggleCartHidden: () => dispatch(toggleCartHidden())
 });
 
+//.121 
+const mapStatetoProps = (state) => ({
+    itemCount: selectCartItemsCount(state) // <---selector call
+})
+
 //connect function we pass null as the default and our dispatch 
 export default connect(
-    null,
+    mapStatetoProps,
     mapDispatchToProps
 )(CartIcon);
