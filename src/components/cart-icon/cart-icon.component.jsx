@@ -3,6 +3,7 @@ import React from 'react';
 //we want to have our redux state so we connect to redux and import our action
 import { connect } from 'react-redux';
 import { toggleCartHidden } from '../../redux/cart/cart.action';
+import { createStructuredSelector } from 'reselect';
 
 //122
 import { selectCartItemsCount } from '../../redux/cart/cart.selectors';
@@ -27,9 +28,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 //.121 
-const mapStatetoProps = (state) => ({
-    itemCount: selectCartItemsCount(state) // <---selector call
-})
+const mapStatetoProps = createStructuredSelector({
+    itemCount: selectCartItemsCount // <---selector call
+});
 
 //connect function we pass null as the default and our dispatch 
 export default connect(
